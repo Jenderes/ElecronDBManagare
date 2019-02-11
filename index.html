@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    var versions = {
+        'node': process.versions.node,
+        'electron':process.versions.electron,
+        'chrome':process.versions.chrome
+    };
+
+    document.write(`Node: ${versions.node}| Electron: ${versions.electron} | Chrome: ${versions.chrome}`);
+</script>  
+</body>
+</html>
