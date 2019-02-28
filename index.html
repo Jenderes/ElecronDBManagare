@@ -3,16 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-<script>
-    var versions = {
-        'node': process.versions.node,
-        'electron':process.versions.electron,
-        'chrome':process.versions.chrome
-    };
+    <div id = "posst-db" class="possition-table">
+            <!-- <div class="buttonGet" id = "buttonGet">Get Length</div> -->
+            <div id="lab" class="lab">
+                    Pick a <font color = "#fd9800">Data</font>Base
+            </div>
+            <table id = "thetable" class = "table-fill">
+                <thead id = "theds">
 
-    document.write(`Node: ${versions.node}| Electron: ${versions.electron} | Chrome: ${versions.chrome}`);
-</script>  
+                </thead>
+                <tbody id = "tb">
+
+                </tbody>
+            </table>
+    </div>
+    <div class="possition-menu">
+        <div class="menu-verticals">
+                <ul>
+                    <li id = "First_ms">First Table</li>
+                    <li id = "Second_ms">Second Table</li>
+                </ul>
+        </div>
+        <div id="MenuGen">
+
+        </div>
+    </div>
+    <script>window.$ = window.jQuery = require('./jquery-3.3.1.min.js');</script>
+    <script>
+        require('./connect-mysql')
+    </script>
 </body>
 </html>

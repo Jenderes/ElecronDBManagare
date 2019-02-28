@@ -10,7 +10,8 @@
   "author": "Dzhangoev Rostislav",
   "license": "MIT",
   "dependencies": {
-    "electron": "^4.0.4"
+    "electron": "^4.0.4",
+    "mysql": "^2.16.0"
   },
   "devDependencies": {
     "eslint": "^5.13.0"

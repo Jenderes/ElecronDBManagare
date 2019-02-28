@@ -1,0 +1,108 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+* {
+  padding: 0;
+  margin: 0;
+}
+body::-webkit-scrollbar { width: 0
+
+}
+body {
+  font-family: "Roboto", helvetica, arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  display: flex;
+  align-items: stretch;
+  background-color:#242633;
+}
+.possition-table{
+  display: flex;
+  /* background: linear-gradient(135deg, #1e5799 0%,#306b99 24%,#327b93 43%,#2a808c 59%,#338f93 79%,#318e88 100%);  */
+  width: 80%;
+  height: 100vh;
+  min-height: 755px;
+}
+.possition-menu
+{
+  display: flex;
+}
+.menu-verticals{
+  color: #ffffff;
+  font-family: "Roboto", helvetica, arial, sans-serif;
+  font-size: 1.3pt;
+  position: fixed;
+  background:#373947;
+  min-width:  150px;
+  width: 20%;
+  height: 100%;
+  min-height: 755px;
+  overflow: hidden;
+}
+.menu-verticals ul {
+  font-size: 14px;
+}
+.menu-verticals ul li {
+  padding: 10px 60px 20px 50px;
+  list-style-type: none;
+  border-left: 0px;
+  margin-top: 30px;
+  text-align: center;
+  background-color: #454758;
+} 
+.menu-verticals ul li:hover {
+  color: #000;
+  background-color: #fd9800;
+  border-radius: 15px;
+  cursor:pointer;
+}
+.table-fill {
+  border-collapse: collapse;
+  padding: 5px 10px 5px 10px;
+  width: 100%;
+}
+.table-fill th {
+  text-align: left;
+  background-color: #fff;
+  padding: 15px 30px 15px 25px;
+  border-bottom: 1px solid #37363a;
+  border-left:  1px solid #39383b;
+  text-align: left;
+}
+.table-fill td {
+  padding: 15px 30px 15px 25px;
+  border-bottom: 2px solid #fff;
+  border-left:  2px solid #fff;
+  text-align: left;
+  opacity: 0.8;
+
+}
+.table-fill tr:hover td {
+  cursor: pointer;
+  background-color: #333335;
+  color: #fff;
+}
+tr {
+  background: #fff;
+  opacity: 0.8;
+}
+tr:nth-child(2n) {
+  background: #bdbcbc;
+  opacity: 0.8;
+ }  
+.table-fill tr:last-child td {
+  border-bottom: 0px;
+}
+.table-fill th:first-child, td:first-child {
+  border-left: 0px;
+}
+.menu-verticals ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+.lab {
+  font-size: 80px;
+  font-weight: weight;
+  color: white;
+  margin-left: 200px;
+  margin-top:200px;
+}
