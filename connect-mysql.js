@@ -95,6 +95,7 @@ $(document).on('click', 'table tbody tr', function(e) {
     console.log('You clicked row '+ ($(this).index()+1) );
     var strk = $(this).index()+1;
     $('tr').css('background-color','#fff');
+    $('tr:even').css('background-color','#bdbcbc');
     $('tr').css('color','#000');
     $(this).css('background-color','#333335');
     $(this).css('color','#fff');
@@ -105,8 +106,10 @@ $(document).on('click', 'table tbody tr', function(e) {
         localStorage.removeItem('elem');
         localStorage.removeItem('Cen');
         var oTable = document.getElementById('First_table');
+        var DkID= oTable.rows.item(strk).cells[0].innerHTML;
         var Nd= oTable.rows.item(strk).cells[1].innerHTML;
         var Dd = oTable.rows.item(strk).cells[2].innerHTML;
+        localStorage.setItem('DokID',DkID);
         localStorage.setItem('Numberdokc',Nd);
         localStorage.setItem('Datadock',Dd);
     }
@@ -114,39 +117,40 @@ $(document).on('click', 'table tbody tr', function(e) {
         localStorage.removeItem('Numberdokc');
         localStorage.removeItem('Datadock');
         var oTable = document.getElementById('Second_table');
+        var NumbTov = oTable.rows.item(strk).cells[0].innerHTML;
         var Nametov = oTable.rows.item(strk).cells[1].innerHTML;
         var element = oTable.rows.item(strk).cells[2].innerHTML;
         var Cena = oTable.rows.item(strk).cells[3].innerHTML;
+        localStorage.setItem('NumbTov',NumbTov);
         localStorage.setItem('NameTov',Nametov);
         localStorage.setItem('elem',element);
         localStorage.setItem('Cen',Cena);
     }
     
 });
+/////////////////////////////////////////////////
+//// Li button click
+$(document).on('click', '#addt', function(e) {
+    CreateWindowAdd();
+    console.log('click');
+});
+$(document).on('click', '#edt', function(e) {
+    CreateWindowEddit();
+});
+$(document).on('click', '#delt', function(e) {
+    DeleteRow(); 
+});
+$(document).on('click', '#refr', function(e) {
+    RefreshTable();
+});
 ///////////////////////////////////////////////
 //ContextMenu
-menu.append(new MenuItem({ label: 'Add', click() {   
-    var mainWindowtwo = new BrowserWindow({
-      width: 350,
-      height: 150
-    });
-    mainWindowtwo.loadURL(url.format({
-      pathname: path.join(__dirname,'adding.html'),
-      protocol:'file',
-      slashes: true
-    }));
+menu.append(new MenuItem({ label: 'Add', click() { 
+    CreateWindowAdd();  
     } }))
 menu.append(new MenuItem({ type: 'separator' }))
-menu.append(new MenuItem({ label: 'Edit', click() {   
-        var mainWindowThird = new BrowserWindow({
-          width: 350,
-          height: 150
-        });
-        mainWindowThird.loadURL(url.format({
-          pathname: path.join(__dirname,'edditing.html'),
-          protocol:'file',
-          slashes: true
-        }));
+menu.append(new MenuItem({ label: 'Edit', click() {  
+    CreateWindowEddit();
     } }))
 menu.append(new MenuItem({ type: 'separator' }))
 menu.append(new MenuItem({ label: 'Delete', click() {  
@@ -160,6 +164,8 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
       e.preventDefault()
       menu.popup({ window: remote.getCurrentWindow() })
     }, false)
+//////////////////////////////////////////
+/////Delete Row in SQL
     function DeleteRow() {
         var mysql = require("mysql");
         var connection = mysql.createConnection({
@@ -176,7 +182,7 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
             console.log("Connection sucsefully enstabled");
         });
         if (localStorage.getItem('table') === 'tovary') {
-            var sql = "DELETE FROM `company`.`tovary` WHERE (`N_tov` = '"+localStorage.getItem('key')+"')";
+            var sql = "DELETE FROM `company`.`tovary` WHERE (`N_tov` = '"+localStorage.getItem('NumbTov')+"')";
             connection.query(sql, (err,rows, fields) => { 
                 if (err) throw err;
                 console.log("1 record inserted");
@@ -184,7 +190,7 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
             console.log(sql);
         }
         if (localStorage.getItem('table') === 'dokum') {
-            var sql = "DELETE FROM `company`.`dokum` WHERE (`DokID` = '"+localStorage.getItem('key')+"')";
+            var sql = "DELETE FROM `company`.`dokum` WHERE (`DokID` = '"+localStorage.getItem('DokID')+"')";
             connection.query(sql, (err,rows, fields) => { 
                 if (err) throw err;
                 console.log("1 record inserted");
@@ -192,6 +198,7 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
             console.log(sql);
         }
     connection.end(() => {
+    RefreshTable();
     console.log("Connection succesfully closed");
     });
     };
@@ -220,6 +227,7 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
             $('table').attr('id', 'First_table');
             var rowCount = MaxRowId();
             localStorage.setItem('rowcount',rowCount);
+            CreateElement();
         });
     };
     function SecondCreateTable(){
@@ -250,6 +258,7 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
                 $('table').attr('id', 'Second_table');
                 var rowCount = MaxRowId();
                 localStorage.setItem('rowcount',rowCount);
+                CreateElement();
             });
     };
     function RefreshTable() {
@@ -270,4 +279,30 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
         });
         return max;
     };
-    
+    function CreateElement() {
+        var spr = "<ul><li id='addt'><img src='svg\/add.svg'></li><li id = 'edt'><img src='svg\/edit.svg'></li><li id = 'delt'><img src='svg\/minus.svg'></li><li id = 'refr'><img src='svg\/repeat.svg'></li></ul>";
+        console.log(spr);
+        $("#MenuGen").html(spr);
+    };
+    function CreateWindowAdd() {
+        var mainWindowtwo = new BrowserWindow({
+            width: 200,
+            height: 270
+          });
+          mainWindowtwo.loadURL(url.format({
+            pathname: path.join(__dirname,'adding.html'),
+            protocol:'file',
+            slashes: true
+          }));
+    };
+    function CreateWindowEddit() {
+        var mainWindowThird = new BrowserWindow({
+            width: 200,
+            height: 270
+          });
+          mainWindowThird.loadURL(url.format({
+            pathname: path.join(__dirname,'edditing.html'),
+            protocol:'file',
+            slashes: true
+          }));
+    };

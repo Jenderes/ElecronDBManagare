@@ -3,14 +3,13 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
-const Menu = electron.Menu;
-const MenuItem = electron.MenuItem;
 var mainWindow = null;
 // listen for app to be ready
 function CreateWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
-    height: 750
+    height: 750,
+    icon: __dirname + '/svg/ico.icns'
   });
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname,'index.html'),

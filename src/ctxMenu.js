@@ -1,5 +1,6 @@
 ///////////////////////////////////////////////
 // Connect MySQL
+const remote = require('electron').remote;
 var mysql = require("mysql");
 var connection = mysql.createConnection({
     host: "localhost",
@@ -30,21 +31,29 @@ $("#added").on("click",() => {
     var stra = '' + (parseInt(localStorage.getItem('rowcount'))+1);
     var sql ="INSERT INTO `company`.`dokum` (`DokID`, `DokN`, `DokDat`) VALUES ('"+stra+"', '"+$('#DokN').val()+"', '"+$('#DokDat').val()+"')";
     console.log(sql);
-  //   connection.query(sql, function (err, result) {
-  //   if (err) throw err;
-  //   console.log("1 record inserted");
-  // });
+    connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+    connection.end(() => {
+      console.log("Connection succesfully closed");
+      });
+  });
   }
   if (localStorage.getItem('table') === 'tovary') {
       var stra = '' + (parseInt(localStorage.getItem('rowcount'))+1);
       var sql ="INSERT INTO `company`.`tovary` (`N_tov`, `Tovar`, `El`, `Cena`) VALUES ('"+stra+"', '"+$("#Tovar").val()+"', '"+$("#El").val()+"', '"+$("#Cena").val()+"')";
       console.log(sql);
-    //   connection.query(sql, function (err, result) {
-    //   if (err) throw err;
-    //   console.log("1 record inserted");
-    // }); 
-  }
-  connection.end(() => {
-    console.log("Connection succesfully closed");
+      connection.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+      connection.end(() => {
+        console.log("Connection succesfully closed");
+        });
     }); 
+  } 
+  remote.getCurrentWindow().close();
+});
+// Close button
+$("#closeds").on("click",() => {
+  remote.getCurrentWindow().close();
 });

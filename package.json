@@ -1,5 +1,5 @@
 {
-  "name": "bdforfirm",
+  "name": "electron-datavase-manager",
   "version": "1.0.0",
   "description": "electron apps for data base",
   "main": "main.js",
@@ -11,9 +11,10 @@
   "license": "MIT",
   "dependencies": {
     "electron": "^4.0.4",
+    "eslint-config-airbnb": "^17.1.0",
     "mysql": "^2.16.0"
   },
   "devDependencies": {
-    "eslint": "^5.13.0"
+    "eslint": "^5.15.0"
   }
 }

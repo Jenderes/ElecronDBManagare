@@ -6,8 +6,17 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
+    <div class="possition-menu">
+        <div class="menu-verticals">
+                <ul>
+                    <li id = 'First_ms'>First Table</li>
+                    <li id = "Second_ms">Second Table</li>
+                </ul>
+        </div>
+        <div id="MenuGen" class="MenuGen">
+        </div>
+    </div>
     <div id = "posst-db" class="possition-table">
-            <!-- <div class="buttonGet" id = "buttonGet">Get Length</div> -->
             <div id="lab" class="lab">
                     Pick a <font color = "#fd9800">Data</font>Base
             </div>
@@ -20,20 +29,11 @@
                 </tbody>
             </table>
     </div>
-    <div class="possition-menu">
-        <div class="menu-verticals">
-                <ul>
-                    <li id = "First_ms">First Table</li>
-                    <li id = "Second_ms">Second Table</li>
-                </ul>
-        </div>
-        <div id="MenuGen">
-
-        </div>
-    </div>
-    <script>window.$ = window.jQuery = require('./jquery-3.3.1.min.js');</script>
     <script>
-        require('./connect-mysql')
+        window.$ = window.jQuery = require('./jquery-3.3.1.min.js');
+        require('./connect-mysql');
+        require('./src/eddits.js');
+        require('./src/ctxMenu.js');
     </script>
 </body>
 </html>

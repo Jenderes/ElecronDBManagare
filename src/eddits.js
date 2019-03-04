@@ -34,23 +34,27 @@ if (localStorage.getItem('table') === 'tovary') {
 // Add New Row in MySQL
 $("#Edding").on("click",() => { 
   if (localStorage.getItem('table') === 'dokum') {
-    var sql ="UPDATE `company`.`dokum` SET `DokN` = '"+$('#DokN').val()+"', `DokDat` = '"+$('#DokDat').val()+"' WHERE (`DokID` = '"+localStorage.getItem('key')+"')";
+    var sql ="UPDATE `company`.`dokum` SET `DokN` = '"+$('#DokN').val()+"', `DokDat` = '"+$('#DokDat').val()+"' WHERE (`DokID` = '"+localStorage.getItem('DokID')+"')";
     console.log(sql);
-    // connection.query(sql, function (err, result) {
-    // if (err) throw err;
-    // console.log("1 record inserted");
-    // }); 
+    connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+    }); 
     }
   if (localStorage.getItem('table') === 'tovary') {
       var stra = '' + (parseInt(localStorage.getItem('rowcount'))+1);
-      var sql ="UPDATE `company`.`tovary` SET `Tovar` = '"+$('#Tovar').val()+"', `El` = '"+$('#El').val()+"', `Cena` = '"+$('#Cena').val()+"' WHERE (`N_tov` = "+localStorage.getItem('key')+")";
+      var sql ="UPDATE `company`.`tovary` SET `Tovar` = '"+$('#Tovar').val()+"', `El` = '"+$('#El').val()+"', `Cena` = '"+$('#Cena').val()+"' WHERE (`N_tov` = "+localStorage.getItem('NumbTov')+")";
       console.log(sql);
-    //   connection.query(sql, function (err, result) {
-    //   if (err) throw err;
-    //   console.log("1 record inserted");
-    // }); 
+      connection.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    }); 
   }
   connection.end(() => {
     console.log("Connection succesfully closed");
     }); 
+    remote.getCurrentWindow().close();
+});
+$("#closedes").on("click",() => {
+  remote.getCurrentWindow().close();
 });
