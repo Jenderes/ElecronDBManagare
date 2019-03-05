@@ -30,8 +30,14 @@ function getFirstTenRows(callback){
         }
         console.log("Connection sucsefully enstabled");
     });
-
-    var sql = 'Select `DokID`, `DokN`, `DokDat` From `dokum`';
+    console.log($('#startdat').val());
+    console.log($('#enddat').val());
+    if (typeof $('#startdat').val() === 'undefined' && typeof $('#enddat').val() === 'undefined' ) { 
+        var sql = "Select `DokID`, `DokN`, `DokDat` From `dokum`"
+    }
+    else {
+        var sql = "Select `DokID`, `DokN`, `DokDat` From `dokum` WHERE DokDat BETWEEN '"+$('#startdat').val()+"' AND '"+$('#enddat').val()+"'";
+    }
     connection.query(sql, (err,rows, fields) => {
         
         if (err) {
@@ -49,6 +55,7 @@ function getFirstTenRows(callback){
 $("#First_ms").on("click", () => {
     FirstCreateTable();
     DeleteStartText();
+    CreateDataElement();
 });
 // get rows on Second table 
 function getSecondTenRows(callback){
@@ -88,6 +95,7 @@ function getSecondTenRows(callback){
 $("#Second_ms").on("click",() => {
     SecondCreateTable();
     DeleteStartText();
+    DeleteDat();
 });
 ///////////////////////////////////////////////
 //GetNumberRow
@@ -143,6 +151,14 @@ $(document).on('click', '#delt', function(e) {
 $(document).on('click', '#refr', function(e) {
     RefreshTable();
 });
+$(document).on('click', '#startdat', function(e) { 
+    DatChange();
+    FirstCreateTable();
+});
+$(document).on('click', '#enddat', function(e) { 
+    DatChange();
+    FirstCreateTable();
+});
 ///////////////////////////////////////////////
 //ContextMenu
 menu.append(new MenuItem({ label: 'Add', click() { 
@@ -160,13 +176,13 @@ menu.append(new MenuItem({ type: 'separator' }))
 menu.append(new MenuItem({ label: 'Refresh', click() {   
      RefreshTable();
     } }))
-    window.addEventListener('contextmenu', (e) => {
+window.addEventListener('contextmenu', (e) => {
       e.preventDefault()
       menu.popup({ window: remote.getCurrentWindow() })
     }, false)
 //////////////////////////////////////////
 /////Delete Row in SQL
-    function DeleteRow() {
+function DeleteRow() {
         var mysql = require("mysql");
         var connection = mysql.createConnection({
             host: "localhost",
@@ -201,8 +217,8 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
     RefreshTable();
     console.log("Connection succesfully closed");
     });
-    };
-    function FirstCreateTable() {
+};
+function FirstCreateTable() {
         localStorage.setItem('key',1);
         localStorage.setItem('table','dokum');
         getFirstTenRows(function(rows){
@@ -229,8 +245,8 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
             localStorage.setItem('rowcount',rowCount);
             CreateElement();
         });
-    };
-    function SecondCreateTable(){
+};
+function SecondCreateTable(){
         localStorage.setItem('key',1);
         localStorage.setItem('table','tovary');
         getSecondTenRows(function(rows){
@@ -260,16 +276,16 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
                 localStorage.setItem('rowcount',rowCount);
                 CreateElement();
             });
-    };
-    function RefreshTable() {
+};
+function RefreshTable() {
         if (localStorage.getItem('table') === 'tovary') {
             SecondCreateTable();
         }
         if (localStorage.getItem('table') === 'dokum') {
             FirstCreateTable();
         }
-    };
-    function MaxRowId () {
+};
+function MaxRowId () {
         var max = 0;
         $('tr td:first-child').each(function () {
             thisis = parseInt($(this).text());
@@ -278,13 +294,12 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
             }
         });
         return max;
-    };
-    function CreateElement() {
+};
+function CreateElement() {
         var spr = "<ul><li id='addt'><img src='svg\/add.svg'></li><li id = 'edt'><img src='svg\/edit.svg'></li><li id = 'delt'><img src='svg\/minus.svg'></li><li id = 'refr'><img src='svg\/repeat.svg'></li></ul>";
-        console.log(spr);
         $("#MenuGen").html(spr);
-    };
-    function CreateWindowAdd() {
+};
+function CreateWindowAdd() {
         var mainWindowtwo = new BrowserWindow({
             width: 200,
             height: 270
@@ -294,8 +309,8 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
             protocol:'file',
             slashes: true
           }));
-    };
-    function CreateWindowEddit() {
+};
+function CreateWindowEddit() {
         var mainWindowThird = new BrowserWindow({
             width: 200,
             height: 270
@@ -305,4 +320,35 @@ menu.append(new MenuItem({ label: 'Refresh', click() {
             protocol:'file',
             slashes: true
           }));
-    };
+};
+function CreateDataElement(){  
+        var datel = "<input type='date' id='startdat' name='trip-start'value='2019-03-03'min='2016-01-01' max='20-12-31'><input type='date' id='enddat' name='trip-end'value='2019-12-11'min='2016-01-01' max='2020-12-31'>"; 
+        $("#MenuDat").html(datel);
+};
+function DeleteDat() {
+        $( "#startdat" ).remove();
+        $( "#enddat" ).remove();
+};
+function DatChange () {
+        var sqlvoice = "SELECT * FROM company.dokum WHERE DokDat BETWEEN '"+$('#startdat').val()+"' AND '"+$('#enddat').val()+"'";
+        console.log(sqlvoice);
+        var mysql = require("mysql");
+        var connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: 'rosq1921',
+        database: "Company"
+        });
+        connection.connect((err) => {
+        if(err){
+        return console.log(err.stack);
+        }
+        connection.query(sqlvoice, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+          }); 
+        connection.end(() => {
+          console.log("Connection succesfully closed");
+          });
+});
+};

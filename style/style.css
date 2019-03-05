@@ -127,3 +127,13 @@ img {
   width: 25px;
   height: 25px;
 }
+.MenuDat {
+  margin-top:30px;
+  margin-left: 7px;
+}
+#stardat {
+ margin-top: 40px;
+}
+#enddat {
+  margin-top: 10px;
+}
