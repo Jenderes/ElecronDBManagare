@@ -1,5 +1,6 @@
 ///////////////////////////////////////////////
 // Connect MySQL
+const remote = require('electron').remote;
 var mysql = require("mysql");
 var connection = mysql.createConnection({
     host: "localhost",
@@ -53,8 +54,10 @@ $("#Edding").on("click",() => {
   connection.end(() => {
     console.log("Connection succesfully closed");
     }); 
-    remote.getCurrentWindow().close();
+    var win = remote.getCurrentWindow()
+    win.close()
 });
 $("#closedes").on("click",() => {
-  remote.getCurrentWindow().close();
+  var win = remote.getCurrentWindow()
+  win.close()
 });

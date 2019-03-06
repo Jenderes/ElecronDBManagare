@@ -1,0 +1,63 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+*{
+  margin: 0;
+  padding: 0;
+}
+body {
+    font-family: "Roboto", helvetica, arial, sans-serif;
+    font-size: 15px;
+    background-color:#292a35;
+    color:#adabab;
+  }
+body::-webkit-scrollbar { width: 0}
+.also {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.Inform {
+  display: flex;
+  height: 19%;
+}
+.DocTable {
+  width: 700px;
+  height: 40%;
+  display: flex;
+  overflow: auto;
+}
+.TovaryTable {
+  width: 700px;
+  height: 40%;
+  display: flex;
+  overflow: auto;
+}
+table {
+  border-collapse: collapse;
+  padding: 5px 10px 5px 10px;
+  width: 100%;
+}
+th {
+  text-align: left;
+  background-color: #fff;
+  padding: 15px 30px 15px 25px;
+  border: 2px solid #3b3a3b;
+  text-align: left;
+}
+td {
+  padding: 15px 30px 15px 25px;
+  border: 2px solid #c4c1c1;
+  text-align: left;
+  opacity: 0.8;
+}
+tr {
+  background: #fff;
+  opacity: 0.8;
+}
+tr:hover td {
+  cursor: pointer;
+  background-color: #333335;
+  color: #fff;
+}
+tr:nth-child(2n) {
+  background: #bdbcbc;
+ }  
