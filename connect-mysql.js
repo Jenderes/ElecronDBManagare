@@ -97,6 +97,9 @@ $("#Second_ms").on("click",() => {
     DeleteStartText();
     DeleteDat();
 });
+$("#Search_Table").on("click",() => {
+    CreateWindowSerchTable();
+});
 ///////////////////////////////////////////////
 //GetNumberRow
 $(document).on('click', 'table tbody tr', function(e) {
@@ -183,6 +186,7 @@ window.addEventListener('contextmenu', (e) => {
 //////////////////////////////////////////
 /////Delete Row in SQL
 function DeleteRow() {
+    if (confirm("Do you wan to delete this row?")){
         var mysql = require("mysql");
         var connection = mysql.createConnection({
             host: "localhost",
@@ -217,6 +221,7 @@ function DeleteRow() {
     RefreshTable();
     console.log("Connection succesfully closed");
     });
+    }
 };
 function FirstCreateTable() {
         localStorage.setItem('key',1);
@@ -351,4 +356,15 @@ function DatChange () {
           console.log("Connection succesfully closed");
           });
 });
+};
+function CreateWindowSerchTable() {
+    var mainWindowStab = new BrowserWindow({
+        width: 1000,
+        height: 750,
+      });
+      mainWindowStab.loadURL(url.format({
+        pathname: path.join(__dirname,'indextable.html'),
+        protocol:'file',
+        slashes: true
+      }));
 };

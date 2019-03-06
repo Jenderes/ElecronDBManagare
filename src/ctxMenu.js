@@ -51,9 +51,11 @@ $("#added").on("click",() => {
         });
     }); 
   } 
-  remote.getCurrentWindow().close();
+  var win = remote.getCurrentWindow();
+  win.close();
 });
 // Close button
 $("#closeds").on("click",() => {
-  remote.getCurrentWindow().close();
+  var win = remote.getCurrentWindow();
+  win.close();
 });

@@ -1,5 +1,5 @@
 {
-  "name": "electron-datavase-manager",
+  "name": "electron-database-manager",
   "version": "1.0.0",
   "description": "electron apps for data base",
   "main": "main.js",
