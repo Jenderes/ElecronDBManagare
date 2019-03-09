@@ -7,7 +7,7 @@ body {
     font-family: "Roboto", helvetica, arial, sans-serif;
     font-size: 15px;
     background-color:#292a35;
-    color:#adabab;
+    color:#000000;
   }
 body::-webkit-scrollbar { width: 0}
 .also {
@@ -17,18 +17,22 @@ body::-webkit-scrollbar { width: 0}
 }
 .Inform {
   display: flex;
-  height: 19%;
+  height: 20%;
 }
 .DocTable {
-  width: 700px;
   height: 40%;
   display: flex;
-  overflow: auto;
 }
 .TovaryTable {
-  width: 700px;
   height: 40%;
   display: flex;
+}
+.tableDocs {
+  width: 700px;
+  overflow: auto;
+}
+.tableTov {
+  width: 750px;
   overflow: auto;
 }
 table {
@@ -47,11 +51,9 @@ td {
   padding: 15px 30px 15px 25px;
   border: 2px solid #c4c1c1;
   text-align: left;
-  opacity: 0.8;
 }
 tr {
   background: #fff;
-  opacity: 0.8;
 }
 tr:hover td {
   cursor: pointer;
@@ -61,3 +63,37 @@ tr:hover td {
 tr:nth-child(2n) {
   background: #bdbcbc;
  }  
+ .MenuGener {
+  display: flex;
+  flex-direction: column;
+}
+.MenuGen {
+  display: flex;
+}
+.MenuGen ul li {
+  cursor: pointer;
+  padding: 5px 5px 5px 5px;
+  list-style-type: none;
+  margin-top: 30px;
+  display:inline-block;
+  background-color: #f89c11;
+  border-radius: 50%;
+  margin-left: 15px;
+}
+.MenuGen ul li:hover {
+  background-color: #f1cfad;
+}
+img {
+  width: 25px;
+  height: 25px;
+}
+.MenuDat {
+  margin-top:30px;
+  margin-left: 7px;
+}
+#stardat {
+ margin-top: 40px;
+}
+#enddat {
+  margin-top: 10px;
+}

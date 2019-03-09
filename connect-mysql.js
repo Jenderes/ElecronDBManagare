@@ -240,7 +240,7 @@ function FirstCreateTable() {
                 tbods += row.DokN;
                 tbods += '</td>';
                 tbods += '<td>';
-                tbods += row.DokDat;
+                tbods += FormatDate(row.DokDat);
                 tbods += '</td>';
                 tbods += '</tr>';
             });
@@ -310,7 +310,7 @@ function CreateWindowAdd() {
             height: 270
           });
           mainWindowtwo.loadURL(url.format({
-            pathname: path.join(__dirname,'adding.html'),
+            pathname: path.join(__dirname,'/html/adding.html'),
             protocol:'file',
             slashes: true
           }));
@@ -321,7 +321,7 @@ function CreateWindowEddit() {
             height: 270
           });
           mainWindowThird.loadURL(url.format({
-            pathname: path.join(__dirname,'edditing.html'),
+            pathname: path.join(__dirname,'/html/edditing.html'),
             protocol:'file',
             slashes: true
           }));
@@ -363,8 +363,24 @@ function CreateWindowSerchTable() {
         height: 750,
       });
       mainWindowStab.loadURL(url.format({
-        pathname: path.join(__dirname,'indextable.html'),
+        pathname: path.join(__dirname,'html/indextable.html'),
         protocol:'file',
         slashes: true
       }));
 };
+function FormatDate(standate) {
+let stardate = "" + standate;
+let normdate = "";
+let SecondDat,FirstDat,ThirdDat;
+let stdat = stardate.match(/\w{2,4}/ig);
+ArrayMonth = [{month:"Jan", number: "01"},{month:"Feb", number: "02"},{month:"Mar", number: "03"},{month:"Apr", number: "04"},{month:"May", number: "05"},{month:"Jun", number: "06"},{month:"Jul", number: "07"},{month:"Aug", number: "08"},{month:"Sep", number: "09"},{month:"Oct", number: "10"},{month:"Nov", number: "11"},{month:"Dec", number: "12"}];
+for (let i = 0; i < ArrayMonth.length; i++) {
+  if (stdat[1] === ArrayMonth[i].month) {
+    SecondDat = ArrayMonth[i].number;
+  }
+}
+ThirdDat = stdat[2];
+FirstDat = stdat[3];
+normdate = FirstDat + "-" + SecondDat + "-" +ThirdDat;
+return normdate
+}

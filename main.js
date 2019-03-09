@@ -9,10 +9,10 @@ function CreateWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 750,
-    icon: __dirname + '/svg/ico.icns'
+    icon: __dirname + '/svg/database.svg'
   });
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname,'index.html'),
+    pathname: path.join(__dirname,'html/index.html'),
     protocol:'file',
     slashes: true
   }));
