@@ -53,15 +53,13 @@ $("#Edding").on("click",() => {
   }
   if (localStorage.getItem('TableTwo') === 'table_tov') {
     var sql ="UPDATE `company`.`tovary` SET `Tovar` = '"+$('#Tovar').val()+"', `El` = '"+$('#El').val()+"', `Cena` = '"+$('#Cena').val()+"' WHERE (`N_tov` = "+localStorage.getItem('NumbTov')+")";
-    console.log(sql);
     connection.query(sql, function (err, result) {
     if (err) throw err;
     console.log("1 record inserted");
   }); 
 }
 if (localStorage.getItem('TableTwo') === 'table_doc') {
-  var sql ="UPDATE `company`.`tovary` SET `Tovar` = '"+$('#Tovar').val()+"', `El` = '"+$('#El').val()+"', `Cena` = '"+$('#Cena').val()+"' WHERE (`N_tov` = "+localStorage.getItem('NumbTov')+")";
-  console.log(sql);
+  const sql ="UPDATE `company`.`tovary` SET `Tovar` = '"+$('#Tovar').val()+"', `El` = '"+$('#El').val()+"', `Cena` = '"+$('#Cena').val()+"' WHERE (`N_tov` = "+localStorage.getItem('NumbTov')+")";
   connection.query(sql, function (err, result) {
   if (err) throw err;
   console.log("1 record inserted");

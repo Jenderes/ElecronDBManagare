@@ -29,17 +29,26 @@ function getFirstTenRows(callback) {
   ) {
     var Qtxt =
       "Select DokID, DokN, DokDat, Sum(Kolvo*Cena) As Suma From Dokum, Prihod P, Tovary T " +
-      "Where DokID = N_pri And P.N_tov = T.N_tov Group By DokID, DokN, DokDat"+
-      " UNION Select DokID, DokN, DokDat, 0.00 As Suma From Dokum Where Not Exists ( Select * From Prihod Where DokID = N_pri )"+
+      "Where DokID = N_pri And P.N_tov = T.N_tov Group By DokID, DokN, DokDat" +
+      " UNION Select DokID, DokN, DokDat, 0.00 As Suma From Dokum Where Not Exists ( Select * From Prihod Where DokID = N_pri )" +
       " Order By DokDat DESC, DokN ";
     console.log(Qtxt);
   } else {
-    var Qtxt="Select DokID, DokN, DokDat, Sum(Kolvo*Cena) As Suma From Dokum, Prihod P, Tovary T"+
-    " Where DokID = N_pri And P.N_tov = T.N_tov And DokDat Between '"+$("#startdat_doc").val()+"' And '"+$("#enddat_doc").val()+"' Group By DokID, DokN, DokDat "+
-    "UNION Select DokID, DokN, DokDat, 0.00 As Suma From Dokum Where "+
-    "DokDat Between '"+$("#startdat_doc").val()+"' And '"+$("#enddat_doc").val()+"' "+
-    "And Not Exists ( Select * From Prihod Where DokID = N_pri )"+
-    "Order By DokDat DESC, DokN";
+    var Qtxt =
+      "Select DokID, DokN, DokDat, Sum(Kolvo*Cena) As Suma From Dokum, Prihod P, Tovary T" +
+      " Where DokID = N_pri And P.N_tov = T.N_tov And DokDat Between '" +
+      $("#startdat_doc").val() +
+      "' And '" +
+      $("#enddat_doc").val() +
+      "' Group By DokID, DokN, DokDat " +
+      "UNION Select DokID, DokN, DokDat, 0.00 As Suma From Dokum Where " +
+      "DokDat Between '" +
+      $("#startdat_doc").val() +
+      "' And '" +
+      $("#enddat_doc").val() +
+      "' " +
+      "And Not Exists ( Select * From Prihod Where DokID = N_pri )" +
+      "Order By DokDat DESC, DokN";
   }
   connection.query(Qtxt, (err, rows, fields) => {
     if (err) {
@@ -73,7 +82,10 @@ function getSecondTenRows(callback) {
     console.log("Connection sucsefully enstabled");
   });
 
-  var Qtxt = "Select P.N_tov, Tovar, El, Cena, Kolvo, Kolvo*Cena As Stoim From prihod P, Tovary T Where N_pri = "+localStorage.getItem('DokID')+" And P.N_tov = T.N_tov Order By Tovar";
+  var Qtxt =
+    "Select P.N_tov, Tovar, El, Cena, Kolvo, Kolvo*Cena As Stoim From prihod P, Tovary T Where N_pri = " +
+    localStorage.getItem("DokID") +
+    " And P.N_tov = T.N_tov Order By Tovar";
   connection.query(Qtxt, (err, rows, fields) => {
     if (err) {
       console.log("An error ocurred perfoming the query.");
@@ -103,17 +115,17 @@ $(document).on("click", "#dc_table tbody tr", function(e) {
   $(this).css("background-color", "#333335");
   $(this).css("color", "#fff");
   localStorage.setItem("key", strk_doc);
-    var oTable = document.getElementById("dc_table");
-    var DkID = oTable.rows.item(strk_doc).cells[0].innerHTML;
-    var Nd = oTable.rows.item(strk_doc).cells[1].innerHTML;
-    var Dd = oTable.rows.item(strk_doc).cells[2].innerHTML;
-    var Sd = oTable.rows.item(strk_doc).cells[3].innerHTML;
-    localStorage.setItem("DokID", DkID);
-    localStorage.setItem("Numberdokc", Nd);
-    localStorage.setItem("Datadock", Dd);
-    localStorage.setItem("Sumdok", Sd);
-    localStorage.setItem('TableTwo','table_doc');
-    SecondCreateTable();
+  var oTable = document.getElementById("dc_table");
+  var DkID = oTable.rows.item(strk_doc).cells[0].innerHTML;
+  var Nd = oTable.rows.item(strk_doc).cells[1].innerHTML;
+  var Dd = oTable.rows.item(strk_doc).cells[2].innerHTML;
+  var Sd = oTable.rows.item(strk_doc).cells[3].innerHTML;
+  localStorage.setItem("DokID", DkID);
+  localStorage.setItem("Numberdokc", Nd);
+  localStorage.setItem("Datadock", Dd);
+  localStorage.setItem("Sumdok", Sd);
+  localStorage.setItem("TableTwo", "table_doc");
+  SecondCreateTable();
 });
 $(document).on("click", "#tv_table tbody tr", function(e) {
   console.log("You clicked row " + ($(this).index() + 1));
@@ -131,7 +143,7 @@ $(document).on("click", "#tv_table tbody tr", function(e) {
   localStorage.setItem("NumbTov", NumbTov);
   localStorage.setItem("NameTov_tov", Nametov);
   localStorage.setItem("kolv_tov", kolv);
-  localStorage.setItem('TableTwo','table_tov');
+  localStorage.setItem("TableTwo", "table_tov");
 });
 /////////////////////////////////////////////////
 //// Li button click
@@ -140,15 +152,20 @@ $(document).on("click", "#addt_doc", function(e) {
   console.log("click");
 });
 $(document).on("click", "#edt_doc", function(e) {
-  CreateWindowEddit();
 });
 $(document).on("click", "#delt_doc", function(e) {
-  if (confirm("Do you wan to delete document number: "+localStorage.getItem('Numberdokc')+" ?")){
-  DeleteRow_doc();
+  if (
+    confirm(
+      "Do you wan to delete document number: " +
+        localStorage.getItem("Numberdokc") +
+        " ?"
+    )
+  ) {
+    DeleteRow_doc();
   }
 });
 $(document).on("click", "#refr_doc", function(e) {
-  RefreshTable_doc();
+  FirstCreateTable();
 });
 $(document).on("click", "#startdat_doc", function(e) {
   FirstCreateTable();
@@ -164,12 +181,18 @@ $(document).on("click", "#edt_tov", function(e) {
   CreateWindowEddit();
 });
 $(document).on("click", "#delt_tov", function(e) {
-  if (confirm("Do you wan to delete tovar with name : "+localStorage.getItem('NameTov')+" ?")){
-  DeleteRow_tov();
+  if (
+    confirm(
+      "Do you wan to delete tovar with name : " +
+        localStorage.getItem("NameTov") +
+        " ?"
+    )
+  ) {
+    DeleteRow_tov();
   }
 });
 $(document).on("click", "#refr_tov", function(e) {
-  RefreshTable_tov();
+  SecondCreateTable();
 });
 ///////////////////////////////////////////////
 //ContextMenu
@@ -219,28 +242,29 @@ window.addEventListener(
 //////////////////////////////////////////
 /////Delete Row in SQL
 function DeleteRow_doc() {
-  var mysql = require("mysql");
-  var connection = mysql.createConnection({
+  const mysql = require('mysql');
+  const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "rosq1921",
     database: "Company"
   });
-  connection.connect(err => {
+  connection.connect(function(err) {
     if (err) {
       return console.log(err.stack);
     }
   });
-  var sqlt = "Delete From Prihod Where N_pri = "+localStorage.getItem('DokID');
-    connection.query(sqlt, (err, rows, fields) => {
-      if (err) throw err;
-    });
-  sqld = "DELETE FROM Dokum WHERE DokID = "+localStorage.getItem('DokID');
-    connection.query(sqld, (err, rows, fields) => {
-      if (err) throw err;
-    });
+  var sqlt =
+    "Delete From Prihod Where N_pri = " + localStorage.getItem("DokID");
+  connection.query(sqlt, (err, rows, fields) => {
+    if (err) throw err;
+  });
+  sqld = "DELETE FROM Dokum WHERE DokID = " + localStorage.getItem("DokID");
+  connection.query(sqld, (err, rows, fields) => {
+    if (err) throw err;
+  });
   connection.end(() => {
-    RefreshTable();
+    FirstCreateTable();
   });
 }
 function DeleteRow_tov() {
@@ -256,12 +280,16 @@ function DeleteRow_tov() {
       return console.log(err.stack);
     }
   });
-  var sqls = "Delete From Prihod Where N_pri = "+localStorage.getItem('DokID')+" And N_tov = "+localStorage.getItem('NumbTov');
-    connection.query(sqls, (err, rows, fields) => {
-      if (err) throw err;
-    });
+  var sqls =
+    "Delete From Prihod Where N_pri = " +
+    localStorage.getItem("DokID") +
+    " And N_tov = " +
+    localStorage.getItem("NumbTov");
+  connection.query(sqls, (err, rows, fields) => {
+    if (err) throw err;
+  });
   connection.end(() => {
-    RefreshTable();
+    SecondCreateTable();
   });
 }
 function FirstCreateTable() {
@@ -291,7 +319,7 @@ function FirstCreateTable() {
     $("#DocTable table tbody").html(tbods);
     CreateElement_doc();
     var rowCount = MaxRowId_doc();
-    localStorage.setItem('rowcount_doc',rowCount);
+    localStorage.setItem("rowcount_doc", rowCount);
   });
 }
 function SecondCreateTable() {
@@ -331,12 +359,6 @@ function SecondCreateTable() {
     CreateElement_tov();
   });
 }
-function RefreshTable_doc() {
-  FirstCreateTable();
-}
-function RefreshTable_tov() {
-    SecondCreateTable();
-}
 function MaxRowId_doc() {
   var max = 0;
   $("#dc_table tr td:first-child").each(function() {
@@ -374,11 +396,14 @@ function CreateWindowAdd_doc() {
   });
   mainWindowtwo.loadURL(
     url.format({
-      pathname: path.join(__dirname, "../html/addoc.html"),
+      pathname: path.join(__dirname, "../html/AddDoc.html"),
       protocol: "file",
       slashes: true
     })
   );
+  mainWindowtwo.on('closed', function() {
+    FirstCreateTable();
+    });
 }
 function CreateWindowAdd_tov() {
   var mainWindowtwo = new BrowserWindow({
@@ -387,35 +412,55 @@ function CreateWindowAdd_tov() {
   });
   mainWindowtwo.loadURL(
     url.format({
-      pathname: path.join(__dirname, "../html/addSrc.html"),
+      pathname: path.join(__dirname, "../html/AddTov.html"),
       protocol: "file",
       slashes: true
     })
   );
+  mainWindowtwo.on('closed', function() {
+    SecondCreateTable();
+    });
 }
-function CreateWindowEddit() {
+function CreateWindowEddit() {  
   var mainWindowThird = new BrowserWindow({
     width: 200,
     height: 270
   });
   mainWindowThird.loadURL(
     url.format({
-      pathname: path.join(__dirname, "../html/EditSrc.html"),
+      pathname: path.join(__dirname, "../html/EditTov.html"),
       protocol: "file",
       slashes: true
     })
   );
+  mainWindowtwo.on('closed', function() {
+    SecondCreateTable();
+    });
 }
 function CreateDataElement() {
-  var datel = "<input type='date' id='startdat_doc' name='trip-start'value='2019-03-03'min='2016-01-01' max='20-12-31'><input type='date' id='enddat_doc' name='trip-end'value='2019-12-11'min='2016-01-01' max='2020-12-31'>";
+  var datel =
+    "<input type='date' id='startdat_doc' name='trip-start'value='2019-03-03'min='2016-01-01' max='20-12-31'><input type='date' id='enddat_doc' name='trip-end'value='2019-12-11'min='2016-01-01' max='2020-12-31'>";
   $("#MenuDat").html(datel);
 }
 function FormatDate(standate) {
   let stardate = "" + standate;
   let normdate = "";
-  let SecondDat,FirstDat,ThirdDat;
-  let stdat = stardate.match(/\w{2,4}/ig);
-  ArrayMonth = [{month:"Jan", number: "01"},{month:"Feb", number: "02"},{month:"Mar", number: "03"},{month:"Apr", number: "04"},{month:"May", number: "05"},{month:"Jun", number: "06"},{month:"Jul", number: "07"},{month:"Aug", number: "08"},{month:"Sep", number: "09"},{month:"Oct", number: "10"},{month:"Nov", number: "11"},{month:"Dec", number: "12"}];
+  let SecondDat, FirstDat, ThirdDat;
+  let stdat = stardate.match(/\w{2,4}/gi);
+  ArrayMonth = [
+    { month: "Jan", number: "01" },
+    { month: "Feb", number: "02" },
+    { month: "Mar", number: "03" },
+    { month: "Apr", number: "04" },
+    { month: "May", number: "05" },
+    { month: "Jun", number: "06" },
+    { month: "Jul", number: "07" },
+    { month: "Aug", number: "08" },
+    { month: "Sep", number: "09" },
+    { month: "Oct", number: "10" },
+    { month: "Nov", number: "11" },
+    { month: "Dec", number: "12" }
+  ];
   for (let i = 0; i < ArrayMonth.length; i++) {
     if (stdat[1] === ArrayMonth[i].month) {
       SecondDat = ArrayMonth[i].number;
@@ -423,6 +468,6 @@ function FormatDate(standate) {
   }
   ThirdDat = stdat[2];
   FirstDat = stdat[3];
-  normdate = FirstDat + "-" + SecondDat + "-" +ThirdDat;
-  return normdate
-  }
+  normdate = FirstDat + "-" + SecondDat + "-" + ThirdDat;
+  return normdate;
+}
