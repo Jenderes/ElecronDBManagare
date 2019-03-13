@@ -14,9 +14,12 @@ connection.connect((err) => {
     return console.log(err.stack);
   }
 });
+$('#data_doc').val(localStorage.getItem('Datadock'));
+$('#naims').val(localStorage.getItem('Numberdokc'));
+$('#naims').prop('disabled', true);
 // button click add
 $('#added').on('click', () => {
-  const sql = `INSERT INTO \`company\`.\`dokum\` (\`DokID\`, \`DokN\`, \`DokDat\`) VALUES ('${parseInt(localStorage.getItem('rowcount_doc'))+1}', '${$("#naims").val()}', '${$("#data_doc").val()}');`;
+  const sql = `UPDATE \`company\`.\`dokum\` SET \`DokDat\` = '${$('#data_doc').val()}' WHERE (\`DokID\` = ${localStorage.getItem('DokID')})`;
   console.log(sql);
   connection.query(sql, (err) => {
     if (err) throw err;

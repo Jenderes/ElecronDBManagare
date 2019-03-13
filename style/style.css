@@ -13,7 +13,7 @@ body {
   text-rendering: optimizeLegibility;
   display: flex;
   align-items: stretch;
-  background-color:#242633;
+  background: linear-gradient(135deg, rgba(20,30,48,1) 0%, rgba(36,59,85,1) 100%);
 }
 .possition-table{
   display: flex;
@@ -80,7 +80,7 @@ body {
 }
 .table-fill tr:hover td {
   cursor: pointer;
-  background-color: #333335;
+  background: linear-gradient(135deg, rgba(20,30,48,1) 0%, rgba(36,59,85,1) 100%);
   color: #fff;
 }
 tr {

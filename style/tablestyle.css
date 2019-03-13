@@ -7,7 +7,7 @@ body {
     font-family: "Roboto", helvetica, arial, sans-serif;
     font-size: 15px;
     background-color:#292a35;
-    color:#000000;
+    background: linear-gradient(135deg, rgba(0,0,0,1) 0%, rgba(67,67,67,1) 100%);
   }
 body::-webkit-scrollbar { width: 0}
 .also {
@@ -57,7 +57,7 @@ tr {
 }
 tr:hover td {
   cursor: pointer;
-  background-color: #333335;
+  background: #434343;
   color: #fff;
 }
 tr:nth-child(2n) {

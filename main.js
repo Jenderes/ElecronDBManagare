@@ -1,33 +1,35 @@
 const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+
+const { app } = electron;
+const { BrowserWindow } = electron;
 const path = require('path');
 const url = require('url');
-var mainWindow = null;
+
+let mainWindow = null;
 // listen for app to be ready
 function CreateWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 750,
-    icon: __dirname + '/svg/database.svg'
+    icon: path.join(__dirname, 'svg/iconfinder.png'),
   });
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname,'html/index.html'),
-    protocol:'file',
-    slashes: true
+    pathname: path.join(__dirname, 'html/index.html'),
+    protocol: 'file',
+    slashes: true,
   }));
-  mainWindow.on('closed', function() {
-  mainWindow = null;
+  mainWindow.on('closed', () => {
+    mainWindow = null;
   });
 }
 app.on('ready', CreateWindow);
 
-app.on('window-all-closed',function() {
-  app.quit()
+app.on('window-all-closed', () => {
+  app.quit();
 });
 
-app.on('activate',function () {
-  if(mainWindow === null) {
-    CreateWindow()
+app.on('activate', () => {
+  if (mainWindow === null) {
+    CreateWindow();
   }
-});
+})

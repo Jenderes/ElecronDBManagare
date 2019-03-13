@@ -1,61 +1,59 @@
-///////////////////////////////////////////////
 // Connect MySQL
-const remote = require('electron').remote;
-var mysql = require("mysql");
-var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: 'rosq1921',
-    database: "Company"
+const {remote} = require('electron');
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'rosq1921',
+  database: 'Company',
 });
 connection.connect((err) => {
-    if(err){
-        return console.log(err.stack);
-
-    }
+  if (err) {
+    return console.log(err.stack);
+  }
 });
-///////////////////////////////////////
-//create input text
+// create input text
 if (localStorage.getItem('table') === 'dokum') {
-var inpe = '<p>Nomer Dokument: <input type="text" id = "DokN"></p><p>Dokument Date: <input type="text" id = "DokDat"></p>';
-  $("#content").html(inpe);
+  const inpe = '<p>Nomer Dokument: <input type="text" id = "DokN"></p><p>Dokument Date: <input type="text" id = "DokDat"></p>';
+  $('#content').html(inpe);
 }
 if (localStorage.getItem('table') === 'tovary') {
-  var inpe = '<p>Name Tovar: <input type="text" id = "Tovar"></p><p>Element: <input type="text" id = "El"></p><p>Cena: <input type="text" id = "Cena"></p>';
-  $("#content").html(inpe);
-} 
-/////////////////////////////////////
+  const inpe = '<p>Name Tovar: <input type="text" id = "Tovar"></p><p>Element: <input type="text" id = "El"></p><p>Cena: <input type="text" id = "Cena"></p>';
+  $('#content').html(inpe);
+}
+console.log($('#DokN').val());
+console.log($('#DokDat').val());
+console.log(parseInt(localStorage.getItem('rowcount'))+1);
 // Add New Row in MySQL
-$("#added").on("click",() => { 
+$('#added').on('click', () => {
   if (localStorage.getItem('table') === 'dokum') {
-    var stra = '' + (parseInt(localStorage.getItem('rowcount'))+1);
-    var sql ="INSERT INTO `company`.`dokum` (`DokID`, `DokN`, `DokDat`) VALUES ('"+stra+"', '"+$('#DokN').val()+"', '"+$('#DokDat').val()+"')";
+    const sql = `INSERT INTO \`company\`.\`dokum\` (\`DokID\`, \`DokN\`, \`DokDat\`) VALUES ('${parseInt(localStorage.getItem('rowcount'))+1}', '${$('#DokN').val()}', '${$('#DokDat').val()}')`;
     console.log(sql);
-    connection.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("1 record inserted");
-    connection.end(() => {
-      console.log("Connection succesfully closed");
+    connection.query(sql, (err) => {
+      if (err) throw err;
+      console.log('1 record inserted');
+      connection.end(() => {
+        console.log('Connection succesfully closed');
       });
-  });
+    });
   }
   if (localStorage.getItem('table') === 'tovary') {
-      var stra = '' + (parseInt(localStorage.getItem('rowcount'))+1);
-      var sql ="INSERT INTO `company`.`tovary` (`N_tov`, `Tovar`, `El`, `Cena`) VALUES ('"+stra+"', '"+$("#Tovar").val()+"', '"+$("#El").val()+"', '"+$("#Cena").val()+"')";
-      console.log(sql);
-      connection.query(sql, function (err, result) {
+    const sql = `INSERT INTO \`company\`.\`tovary\` (\`N_tov\`, \`Tovar\`, \`El\`, \`Cena\`) VALUES ('${parseInt(localStorage.getItem('rowcount'))+1}', '${$('#Tovar').val()}', '${$('#El').val()}', '${$('#Cena').val()}')`;
+    console.log(sql);
+    connection.query(sql, (err) => {
       if (err) throw err;
-      console.log("1 record inserted");
+      console.log('1 record inserted');
       connection.end(() => {
-        console.log("Connection succesfully closed");
-        });
-    }); 
-  } 
-  var win = remote.getCurrentWindow();
+        console.log('Connection succesfully closed');
+      });
+    });
+  }
+  const win = remote.getCurrentWindow();
   win.close();
 });
 // Close button
-$("#closeds").on("click",() => {
-  var win = remote.getCurrentWindow();
+$('#closeds').on('click', () => {
+  let win = remote.getCurrentWindow();
   win.close();
 });
